@@ -45,11 +45,13 @@ if (isset($_GET['fim'])) {
     $acertos = count(array_intersect_assoc($respostas_forms, $gabarito_alinhado));
     $total = count($perguntas);
 
+    echo '<link rel="stylesheet" href="style.css">';
     echo <<<HTML
-        <h2>Acertou $acertos/$total</h2>
+        <div class="resultado">
+            <h2>Acertou $acertos/$total</h2>
+            <a href="index.php?reset=true">Reiniciar</a>
+        </div>
     HTML;
-
-    echo '<br><a href="index.php?reset=true">Reiniciar</a>';
     exit;
 }
 
@@ -59,6 +61,8 @@ if (isset($_GET['reset'])) {
     exit;
 }
 ?>
+
+<link rel="stylesheet" href="style.css">
 
 <form action="" method="post">
     <input type="hidden" name="questao_atual" value="<?= $questoes ?>">
