@@ -39,18 +39,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 }
 
 if (isset($_GET['fim'])) {
-    $respostas_forms = array_values($_SESSION['respostas']);
+    $respostas_forms = array_values($_SESSION['respostas'] ?? []);
+    $gabarito_alinhado = array_values($gabarito);
 
-    echo "<pre>";
-    echo "Suas respostas:\n";
-    print_r($respostas_forms);                                                                         
+    $acertos = count(array_intersect_assoc($respostas_forms, $gabarito_alinhado));
+    $total = count($perguntas);
 
-    echo "\nGabarito:\n";
-    print_r($gabarito);                                                                                    
-
-    echo "\nDiferenças (erros):\n";
-    print_r(array_diff_assoc($respostas_forms, $gabarito));
-    echo "</pre>";
+    echo <<<HTML
+        <h2>Acertou $acertos/$total</h2>
+    HTML;
 
     echo '<br><a href="index.php?reset=true">Reiniciar</a>';
     exit;
